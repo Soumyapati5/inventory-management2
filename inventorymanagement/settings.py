@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from datetime import timedelta
 import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,12 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-imj0r&meoq89=aq5!4r2mz#o8ok4!)))mj(7c*%8)!-m#^c&4r'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(",")
 
 
 # Application definition
@@ -100,7 +101,7 @@ DATABASES = {
 }
 
 
-DATABASES['default'] = dj_database_url.parse('postgresql://my_db_cv6r_user:JNiBRMzv5nc8KtriCgC2pl4OqzoVgEGs@dpg-cs330abv2p9s738rdk00-a.oregon-postgres.render.com/my_db_cv6r')
+DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
